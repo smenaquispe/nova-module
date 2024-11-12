@@ -25,5 +25,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user->assignRole('admin');
+
+        if ($user->wasRecentlyCreated) {
+            $this->command->info("Usuario '{$user->name}' creado exitosamente.");
+        } else {
+            $this->command->info("El usuario con email '{$user->email}' ya existe.");
+        }
     }
 }
