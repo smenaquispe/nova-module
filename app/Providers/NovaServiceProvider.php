@@ -5,6 +5,14 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Illuminate\Http\Request;
+use Laravel\Nova\Menu\MenuItem;
+use Laravel\Nova\Menu\MenuSection;
+use Laravel\Nova\Dashboards\Main;
+use App\Nova\User;
+use App\Nova\Cat;
+use App\Nova\Permission;
+use App\Nova\Role;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -16,6 +24,22 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Nova::mainMenu(function (Request $request) {
+            return [
+                MenuSection::dashboard(Main::class)->icon('chart-bar'),
+
+                MenuSection::make('Models', [
+                    MenuItem::resource(User::class),
+                    MenuItem::resource(Cat::class),
+                ])->icon('user')->collapsable(),
+
+                MenuSection::make('Authorization', [
+                    MenuItem::resource(Permission::class),
+                    MenuItem::resource(Role::class), 
+                ])->icon('document-text')->collapsable(),
+            ];
+        });
     }
 
     /**
