@@ -46,7 +46,7 @@ class User extends Authenticatable
 
     public function hasThisPermission(string $permission): bool
     {
-        return $this->getPermissionsViaRoles()->contains(fn ($p) => $p->name === $permission);
+        return $this->getPermissionsViaRoles()->contains(fn ($p) => $p->name === $permission) || $this->can($permission);
     }
 
     public function isYourCat(Cat $cat): bool

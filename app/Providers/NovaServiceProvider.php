@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Dashboards\Main;
+use App\Nova\Dashboards\UserInsights;
+USE App\Nova\Dashboards\CatInsights;
 use App\Nova\User;
 use App\Nova\Cat;
 use App\Nova\Permission;
@@ -38,6 +40,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Permission::class),
                     MenuItem::resource(Role::class), 
                 ])->icon('document-text')->collapsable(),
+
+                MenuSection::dashboard(UserInsights::class)->icon('chart-bar'),
+            
+                MenuSection::dashboard(CatInsights::class)->icon('chart-bar'),
             ];
         });
     }
@@ -81,7 +87,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function dashboards()
     {
         return [
-            new \App\Nova\Dashboards\Main,
+            Main::make(),
+            UserInsights::make(),
+            CatInsights::make(),
         ];
     }
 
