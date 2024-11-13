@@ -16,6 +16,7 @@ use App\Nova\Cat;
 use App\Nova\Permission;
 use App\Nova\Role;
 use Acme\PriceTracker\PriceTracker;
+use App\Nova\AccessHour;
 use Laravel\Nova\Events\ServingNova;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -36,6 +37,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuSection::make('Models', [
                     MenuItem::resource(User::class),
                     MenuItem::resource(Cat::class),
+                    MenuItem::resource(AccessHour::class),
                 ])->icon('user')->collapsable(),
 
                 MenuSection::make('Authorization', [

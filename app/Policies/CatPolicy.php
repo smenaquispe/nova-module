@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Cat;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Carbon\Carbon;
 
 class CatPolicy
 {
@@ -13,6 +14,15 @@ class CatPolicy
      */
     public function viewAny(User $user): bool
     {
+        $startHour = 9;
+        $endHour = 24;
+        $currentHour = Carbon::now()->hour;
+
+        // Si el usuario no está dentro del rango de horas permitido, denegar el acceso
+        if ($currentHour < $startHour || $currentHour >= $endHour) {
+            return false;
+        }
+
         return $user->hasThisPermission('view any cat');
     }
 
