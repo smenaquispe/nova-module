@@ -139,7 +139,11 @@ class Cat extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            DownloadCsvCat::make()
+            DownloadCsvCat::make()->canSee(function ($request) {
+                return $request->user()->hasThisPermission('make csv cat');
+            })->canRun(function ($request, $user) {
+                return $request->user()->hasThisPermission('make csv cat');
+            }),
         ];
     }
 }

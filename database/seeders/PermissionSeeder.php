@@ -21,9 +21,14 @@ class PermissionSeeder extends Seeder
             'create cat',
             'view cat',
             'view any cat',
+            'make csv cat',
+            'make csv user',
         ];
 
         foreach ($array_permissions as $permission) {
+            if (Permission::where('name', $permission)->exists()) {
+                continue;
+            }
             Permission::create(['name' => $permission]);
         }
     }

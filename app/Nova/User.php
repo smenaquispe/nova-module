@@ -119,7 +119,11 @@ class User extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            DownloadCsvUser::make()
+            DownloadCsvUser::make()->canSee(function ($request) {
+                return $request->user()->hasThisPermission('make csv user');
+            })->canRun(function ($request, $user) {
+                return $request->user()->hasThisPermission('make csv user');
+            }),
         ];
     }
 }
