@@ -45,8 +45,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Role::class), 
                 ])->icon('document-text')->collapsable(),
 
-                MenuSection::dashboard(UserInsights::class)->icon('chart-bar'),
-                MenuSection::dashboard(CatInsights::class)->icon('chart-bar'),
+                MenuSection::dashboard(UserInsights::class)->icon('chart-bar')->canSee(fn ($request) => $request->user()->isAdmin()),
+                MenuSection::dashboard(CatInsights::class)->icon('chart-bar')->canSee(fn ($request) => $request->user()->isAdmin()),
                 
                 MenuSection::make('Contact Form')
                     ->path('price-tracker')
@@ -96,8 +96,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             Main::make(),
-            UserInsights::make(),
-            CatInsights::make(),
+            UserInsights::make()->canSee(fn ($request) => $request->user()->isAdmin()),
+            CatInsights::make()->canSee(fn ($request) => $request->user()->isAdmin()),
         ];
     }
 
