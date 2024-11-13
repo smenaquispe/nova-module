@@ -29,15 +29,19 @@ class DownloadCsvUser extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
-        $csv->insertOne(['Name', 'Email']);
+        $csv->insertOne(['Name', 'Email', 'Roles', 'Permissions']);
 
         foreach ($models as $model) {
+            $roles = $model->roles->pluck('name')->implode(', ');
+            $permissions = $model->permissions->pluck('name')->implode(', ');
+
             $csv->insertOne([
                 $model->name,
                 $model->email,
+                $roles,
+                $permissions,
             ]);
         }
-
         $filename = 'users_'. now()->format('Y-m-d-H-i-s') . '.csv';
         Storage::disk('public')->put($filename, $csv->toString());
         $url = Storage::url($filename);
