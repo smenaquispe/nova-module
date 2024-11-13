@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\DownloadCsvUser;
 use Laravel\Nova\Fields\BelongsToMany;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -117,6 +118,8 @@ class User extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            DownloadCsvUser::make()
+        ];
     }
 }
