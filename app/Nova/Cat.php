@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\Actions\DownloadCsvCat;
 
 class Cat extends Resource
 {
@@ -137,6 +138,8 @@ class Cat extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            DownloadCsvCat::make()
+        ];
     }
 }

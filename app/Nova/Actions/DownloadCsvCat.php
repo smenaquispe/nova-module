@@ -13,11 +13,9 @@ use League\Csv\Writer;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Actions\ActionResponse;
 
-class DownloadCsvUser extends Action
+class DownloadCsvCat extends Action
 {
     use InteractsWithQueue, Queueable;
-
-    public $name = 'Download CSV';
 
     /**
      * Perform the action on the given models.
@@ -29,16 +27,21 @@ class DownloadCsvUser extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
-        $csv->insertOne(['Name', 'Email']);
+        $csv->insertOne(['Name', 'Age', 'Breed', 'Color', 'Weight', 'Size', 'Gender']);
 
         foreach ($models as $model) {
             $csv->insertOne([
                 $model->name,
-                $model->email,
+                $model->age,
+                $model->breed,
+                $model->color,
+                $model->weight,
+                $model->size,
+                $model->gender,
             ]);
         }
 
-        $filename = 'users_'. now()->format('Y-m-d-H-i-s') . '.csv';
+        $filename = 'cats_'. now()->format('Y-m-d-H-i-s') . '.csv';
         Storage::disk('public')->put($filename, $csv->toString());
         $url = Storage::url($filename);
         return ActionResponse::download($filename, $url);
