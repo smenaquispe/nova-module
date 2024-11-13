@@ -27,7 +27,7 @@ class DownloadCsvCat extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
-        $csv->insertOne(['Name', 'Age', 'Breed', 'Color', 'Weight', 'Size', 'Gender']);
+        $csv->insertOne(['Name', 'Age', 'Breed', 'Color', 'Weight', 'Size', 'Gender', 'Owner']);
 
         foreach ($models as $model) {
             $csv->insertOne([
@@ -38,6 +38,7 @@ class DownloadCsvCat extends Action
                 $model->weight,
                 $model->size,
                 $model->gender,
+                $model->user->name ?? '',
             ]);
         }
 
