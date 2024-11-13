@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -10,7 +13,8 @@
         "laravel/nova": "^4.0",
         "laravel/tinker": "^2.9",
         "league/csv": "^9.18",
-        "spatie/laravel-permission": "^6.10"
+        "spatie/laravel-permission": "^6.10",
+        "acme/price-tracker": "@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -72,6 +76,14 @@
         {
             "type": "composer",
             "url": "https://nova.laravel.com"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/PriceTracker"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/PriceTracker"
         }
     ],
     "minimum-stability": "stable",

@@ -4,6 +4,7 @@ namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Nova\Notifications\Notification;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
@@ -45,6 +46,8 @@ class DownloadCsvUser extends Action
         $filename = 'users_'. now()->format('Y-m-d-H-i-s') . '.csv';
         Storage::disk('public')->put($filename, $csv->toString());
         $url = Storage::url($filename);
+
+        // Notification::make('Downloaded users');
         return ActionResponse::download($filename, $url);
     }
 

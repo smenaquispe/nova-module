@@ -15,6 +15,8 @@ use App\Nova\User;
 use App\Nova\Cat;
 use App\Nova\Permission;
 use App\Nova\Role;
+use Acme\PriceTracker\PriceTracker;
+use Laravel\Nova\Events\ServingNova;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -24,7 +26,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      * @return void
      */
     public function boot()
-    {
+    {    
         parent::boot();
 
         Nova::mainMenu(function (Request $request) {
@@ -42,10 +44,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ])->icon('document-text')->collapsable(),
 
                 MenuSection::dashboard(UserInsights::class)->icon('chart-bar'),
-            
                 MenuSection::dashboard(CatInsights::class)->icon('chart-bar'),
+                
+                MenuSection::make('Contact Form')
+                    ->path('price-tracker')
+                    ->icon('currency-dollar')
             ];
         });
+
     }
 
     /**
@@ -100,7 +106,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
-        return [];
+        return [
+            PriceTracker::make(),
+        ];
     }
 
     /**
