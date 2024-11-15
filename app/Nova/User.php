@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\DownloadCsvUser;
+use App\Nova\Actions\LongRunningTask;
 use Laravel\Nova\Fields\BelongsToMany;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -124,6 +125,9 @@ class User extends Resource
             })->canRun(function ($request, $user) {
                 return $request->user()->hasThisPermission('make csv user');
             }),
+            resolve(LongRunningTask::class, [
+                'user' => $request->user(),
+            ]),
         ];
     }
 }
